@@ -238,18 +238,21 @@ Number,Date,Time to voice or speech configuration settings for Arabic :
 
 Note: 
 ====
-    1) if you have voices for 0 to 99 then no need to add 3rd and 4th line instead you can simply use
-       _[n]um:XX =>  digits/${SAY}. It seems that no need to apply this patch just copy and paste english number content 
-       here.   
-    2)above settings will be useful for those who have limited voices rather than 0..99.
+    1)above settings will be useful for those who have limited voices rather than 0..99.
 
-    3) if you don't like to create sperate context for arabic in say.conf, then you can replace "ar" voice files with 
-       "en". Remember voice files should have 0..99 voices.
-    4) You can download arabic voice files from https://github.com/ashikali/Regional-Asterisk-Number-Date-Time-to-speech-settings.
+    2) You can download arabic voice files from https://github.com/ashikali/Regional-Asterisk-Number-Date-Time-to-speech-settings.
        it does not contain 0..99,date and time voice files. Just it has to cover number part for above settings.
 
 How to Workout:
 ==============
+To make it effect in asterisk just run the following command in asterisk console. 
+
+*CLI> module reload app_playback.so
+
+  or 
+
+*CLI> reload 
+
 
   On Dialplan:
   ===========
