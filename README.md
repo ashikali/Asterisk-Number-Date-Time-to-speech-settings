@@ -185,50 +185,51 @@ such as 11,23,67..99. Remaining methodologies are same as english.
 For example,
 	34 => "orbaha va thalathun" just reverse interpretation in english. Instead of "thirty four", "four thirty" that is it.
 
-[ar](date-base,digit-base)
-    [ar](date-base,digit-base)
-    _[n]um:0. => num:${SAY:1} ;just skip the preceeding '0'  000 results 0 this 0 will hit again
-			      ;coz . means it should have some digits on that.
-    _[n]um:X => digits/${SAY}
-    _[n]um:1[1-9] =>  digits/${SAY} ;z 1-9 so 10,20,30 ..90
-    _[n]um:Z0 =>  digits/${SAY} ;z 1-9 so 10,20,30 ..90
-    _[n]um:[2-9][1-9] => digits/${SAY:1},digits/and,digits/${SAY:0:1}0
-    _[n]um:[1-2]00 =>  digits/${SAY} ;100,200 voice should be
-    _[n]um:[3-9]00 => digits/${SAY:0:1},digits/100
-    _[n]um:[1-2]XX =>  digits/${SAY:0:1}00,digits/and,num:${SAY:1}
-    _[n]um:[3-9]XX => digits/${SAY:0:1},digits/100,digits/and,num:${SAY:1}
+### Say.conf context
 
-    _[n]um:[1-2]000 => digits/${SAY} ;1000,2000 voice should be
-    _[n]um:[3-9]000 => digits/${SAY:0:1}, digits/1000
-    _[n]um:[1-2]XXX => digits/${SAY:0:1}000,digits/and,num:${SAY:1}
-    _[n]um:[3-9]XXX => digits/${SAY:0:1},digits/1000,digits/and,num:${SAY:1}
-    _[n]um:XX000 => num:${SAY:0:2},digits/1000
-    _[n]um:XXXXX => num:${SAY:0:2},digits/1000,digits/and,num:${SAY:2} ;${say:index:count}
-    _[n]um:XXX000 => num:${SAY:0:3},digits/1000
-    _[n]um:XXXXXX => num:${SAY:0:3},digits/1000,digits/and,num:${SAY:3}
-
-    _[n]um:1000000 => digits/million
-    _[n]um:X000000 => digits/${SAY:0:1}, digits/million
-    _[n]um:1XXXXXX => digits/million,digits/and,num:${SAY:1}
-    _[n]um:XXXXXXX => digits/${SAY:0:1}, digits/million,digits/and,num:${SAY:1}
-    _[n]um:XX000000 => num:${SAY:0:2},digits/million
-    _[n]um:XXXXXXXX => num:${SAY:0:2}, digits/million,digits/and,num:${SAY:2}
-    _[n]um:XXX000000 => num:${SAY:0:3}, digits/million
-    _[n]um:XXXXXXXXX => num:${SAY:0:3}, digits/million,digits/and,num:${SAY:3}
-
-    _[n]um:1000000000 => digits/billion
-    _[n]um:X000000000 => digits/${SAY:0:1}, digits/billion
-    _[n]um:1XXXXXXXXX => digits/billion,digits/and,num:${SAY:1}
-    _[n]um:XXXXXXXXXX => digits/${SAY:0:1}, digits/billion,digits/and,num:${SAY:1}
-    _[n]um:XX000000000 => num:${SAY:0:2}, digits/billion
-    _[n]um:XXXXXXXXXXX => num:${SAY:0:2}, digits/billion,digits/and, num:${SAY:2}
-    _[n]um:XXX000000000 => num:${SAY:0:3}, digits/billion
-    _[n]um:XXXXXXXXXXXX => num:${SAY:0:3}, digits/billion,digits/and, num:${SAY:3}
-
-    _datetime::. => date:AdBY 'digits/at' IMp:${SAY}
-    _date::. => date:AdBY:${SAY}
-    _time::. => date:IMp:${SAY}
-
+	    [ar](date-base,digit-base)
+	    _[n]um:0. => num:${SAY:1} ;just skip the preceeding '0'  000 results 0 this 0 will hit again
+				      ;coz . means it should have some digits on that.
+	    _[n]um:X => digits/${SAY}
+	    _[n]um:1[1-9] =>  digits/${SAY} ;z 1-9 so 10,20,30 ..90
+	    _[n]um:Z0 =>  digits/${SAY} ;z 1-9 so 10,20,30 ..90
+	    _[n]um:[2-9][1-9] => digits/${SAY:1},digits/and,digits/${SAY:0:1}0
+	    _[n]um:[1-2]00 =>  digits/${SAY} ;100,200 voice should be
+	    _[n]um:[3-9]00 => digits/${SAY:0:1},digits/100
+	    _[n]um:[1-2]XX =>  digits/${SAY:0:1}00,digits/and,num:${SAY:1}
+	    _[n]um:[3-9]XX => digits/${SAY:0:1},digits/100,digits/and,num:${SAY:1}
+	
+	    _[n]um:[1-2]000 => digits/${SAY} ;1000,2000 voice should be
+	    _[n]um:[3-9]000 => digits/${SAY:0:1}, digits/1000
+	    _[n]um:[1-2]XXX => digits/${SAY:0:1}000,digits/and,num:${SAY:1}
+	    _[n]um:[3-9]XXX => digits/${SAY:0:1},digits/1000,digits/and,num:${SAY:1}
+	    _[n]um:XX000 => num:${SAY:0:2},digits/1000
+	    _[n]um:XXXXX => num:${SAY:0:2},digits/1000,digits/and,num:${SAY:2} ;${say:index:count}
+	    _[n]um:XXX000 => num:${SAY:0:3},digits/1000
+	    _[n]um:XXXXXX => num:${SAY:0:3},digits/1000,digits/and,num:${SAY:3}
+	
+	    _[n]um:1000000 => digits/million
+	    _[n]um:X000000 => digits/${SAY:0:1}, digits/million
+	    _[n]um:1XXXXXX => digits/million,digits/and,num:${SAY:1}
+	    _[n]um:XXXXXXX => digits/${SAY:0:1}, digits/million,digits/and,num:${SAY:1}
+	    _[n]um:XX000000 => num:${SAY:0:2},digits/million
+	    _[n]um:XXXXXXXX => num:${SAY:0:2}, digits/million,digits/and,num:${SAY:2}
+	    _[n]um:XXX000000 => num:${SAY:0:3}, digits/million
+	    _[n]um:XXXXXXXXX => num:${SAY:0:3}, digits/million,digits/and,num:${SAY:3}
+	
+	    _[n]um:1000000000 => digits/billion
+	    _[n]um:X000000000 => digits/${SAY:0:1}, digits/billion
+	    _[n]um:1XXXXXXXXX => digits/billion,digits/and,num:${SAY:1}
+	    _[n]um:XXXXXXXXXX => digits/${SAY:0:1}, digits/billion,digits/and,num:${SAY:1}
+	    _[n]um:XX000000000 => num:${SAY:0:2}, digits/billion
+	    _[n]um:XXXXXXXXXXX => num:${SAY:0:2}, digits/billion,digits/and, num:${SAY:2}
+	    _[n]um:XXX000000000 => num:${SAY:0:3}, digits/billion
+	    _[n]um:XXXXXXXXXXXX => num:${SAY:0:3}, digits/billion,digits/and, num:${SAY:3}
+	
+	    _datetime::. => date:AdBY 'digits/at' IMp:${SAY}
+	    _date::. => date:AdBY:${SAY}
+	    _time::. => date:IMp:${SAY}
+	
 
 ### Note
 
@@ -291,7 +292,6 @@ To make it effect in asterisk just run the following command in asterisk console
 
 		$agi->exec("PlayBack","num:{$info[0]},say");
 
-----------------------------------------------------------------------------------------------------
 
 ## number_to_arabic.rb
 
@@ -317,5 +317,6 @@ if you want to change the format in case you want print as arabic text then insi
 
 
 
-Cheers,
+With Cheers,
+
 Ashik
