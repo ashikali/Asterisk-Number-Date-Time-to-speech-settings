@@ -1,76 +1,78 @@
 This documentation is useful for those who wants to configure Date,Time,Number to speech in Asterisk.
 
-### Introduction
+# Introduction
 
- In order to configure number to speech in asterisk.We need to edit /etc/asterisk/say.conf file.By default there are number to speech configurations for English,German and itly..etc languages.If you want to make asterisk to speak your language, we have to do some configurations on this.For example we can say, in say.conf file by default we are able to see the configuration settings for englise as [en] and itly as [it]. Here I attached sample text of say.conf for english.
-
-
-[digit-base](!)         ; base rule for digit strings
-                        ; XXX incomplete yet
-    _digit:[0-9] => digits/${SAY}
-    _digit:[-] => letters/dash
-    _digit:[*] => letters/star
-    _digit:[@] => letters/at
-    _digit:[0-9]. => digit:${SAY:0:1}, digit:${SAY:1}
-
-[date-base](!)          ; base rules for dates and times
-    ; the 'SAY' variable contains YYYYMMDDHHmm.ss-dow-doy
-    ; these rule map the strftime attributes.
-    _date:Y:. => num:${SAY:0:4} ; year, 19xx
-    _date:[Bbh]:. => digits/mon-$[${SAY:4:2}-1]                 ; month name, 0..11
-    _date:[Aa]:. => digits/day-${SAY:16:1}      ; day of week
-    _date:[de]:. => num:${SAY:6:2}              ; day of month
-    _date:[H]:. => digits/oh, num:${SAY:8:2}
-     ; hour (oh one, oh two, ..., oh nine, ten, eleven, ..., twenty-three)
-    _date:[I]:. => num:$[${SAY:8:2} % 12]       ; hour 0-12
-    _date:[M]:. => num:${SAY:10:2}              ; minute
-    ; XXX too bad the '?' function does not remove the quotes
-    ; _date:[pP]:. => digits/$[ ${SAY:10:2} > 12 ? "p-m" :: "a-m"]      ; am pm
-    _date:[pP]:. => digits/p-m  ; am pm
-    _date:[S]:. => num:${SAY:13:2}              ; seconds
-    _date:[Ii]:. => num:$[${SAY:8:2} % 12]                      ; hour 0-12
-    _date:[k]:. => num:${SAY:8:2}                               ; hour (one, two. three, ...,twenty three
-    _date:[m]:. => num:${SAY:4:2}                               ; month number
-    _date:[Q]:. => date:dby ;incompleat                         ; "today", "yesterday" or ABdY
-    _date:[q]:. => date:dby ;incompleat                         ; "" (for today), "yesterday", weekday, or ABdY
-    _date:[R]:. => date:HM${SAY}                                ; 24 hour time, including minute
-    _date:[T]:. => date:HMS${SAY}                               ; 24 hour, minure, seconds
+ In order to configure number to speech in asterisk.We need to edit /etc/asterisk/say.conf file.By default there are number to speech configurations for English,German and itly..etc languages.If you want to make asterisk to speak your language, we have to do some configurations on this.For example we can say, in say.conf file by default we are able to see the configuration settings for englise as [en] and itly as [it]. 
 
 
-[en-base](!)  ; this is macro you have to find out exact [en] where this macro has been included.
-    _[n]um:0. => num:${SAY:1}
-    _[n]um:X => digits/${SAY}
-    _[n]um:1X => digits/${SAY}
-    _[n]um:[2-9]0 =>  digits/${SAY}
-    _[n]um:[2-9][1-9] =>  digits/${SAY:0:1}0, num:${SAY:1}
-    _[n]um:X00 => num:${SAY:0:1}, digits/hundred
-    _[n]um:XXX => num:${SAY:0:1}, digits/hundred, num:${SAY:1}
+### Here I attached sample text of say.conf for english
 
-    _[n]um:X000 => num:${SAY:0:1}, digits/thousand
-    _[n]um:XXXX => num:${SAY:0:1}, digits/thousand, num:${SAY:1}
-    _[n]um:XX000 => num:${SAY:0:2}, digits/thousand
-    _[n]um:XXXXX => num:${SAY:0:2}, digits/thousand, num:${SAY:2}
-    _[n]um:XXX000 => num:${SAY:0:3}, digits/thousand
-    _[n]um:XXXXXX => num:${SAY:0:3}, digits/thousand, num:${SAY:3}
-
-    _[n]um:X000000 => num:${SAY:0:1}, digits/million
-    _[n]um:XXXXXXX => num:${SAY:0:1}, digits/million, num:${SAY:1}
-    _[n]um:XX000000 => num:${SAY:0:2}, digits/million
-    _[n]um:XXXXXXXX => num:${SAY:0:2}, digits/million, num:${SAY:2}
-    _[n]um:XXX000000 => num:${SAY:0:3}, digits/million
-    _[n]um:XXXXXXXXX => num:${SAY:0:3}, digits/million, num:${SAY:3}
-
-    _[n]um:X000000000 => num:${SAY:0:1}, digits/billion
-    _[n]um:XXXXXXXXXX => num:${SAY:0:1}, digits/billion, num:${SAY:1}
-    _[n]um:XX000000000 => num:${SAY:0:2}, digits/billion
-    _[n]um:XXXXXXXXXXX => num:${SAY:0:2}, digits/billion, num:${SAY:2}
-    _[n]um:XXX000000000 => num:${SAY:0:3}, digits/billion
-    _[n]um:XXXXXXXXXXXX => num:${SAY:0:3}, digits/billion, num:${SAY:3}
-
-[en](en-base,date-base,digit-base) ;here we have included macros we are going to use.
-    _datetime::. => date:AdBY 'digits/at' IMp:${SAY}
-    _date::. => date:AdBY:${SAY}
-    _time::. => date:IMp:${SAY}
+	[digit-base](!)         ; base rule for digit strings
+	                        ; XXX incomplete yet
+	    _digit:[0-9] => digits/${SAY}
+	    _digit:[-] => letters/dash
+	    _digit:[*] => letters/star
+	    _digit:[@] => letters/at
+	    _digit:[0-9]. => digit:${SAY:0:1}, digit:${SAY:1}
+	
+	[date-base](!)          ; base rules for dates and times
+	    ; the 'SAY' variable contains YYYYMMDDHHmm.ss-dow-doy
+	    ; these rule map the strftime attributes.
+	    _date:Y:. => num:${SAY:0:4} ; year, 19xx
+	    _date:[Bbh]:. => digits/mon-$[${SAY:4:2}-1]                 ; month name, 0..11
+	    _date:[Aa]:. => digits/day-${SAY:16:1}      ; day of week
+	    _date:[de]:. => num:${SAY:6:2}              ; day of month
+	    _date:[H]:. => digits/oh, num:${SAY:8:2}
+	     ; hour (oh one, oh two, ..., oh nine, ten, eleven, ..., twenty-three)
+	    _date:[I]:. => num:$[${SAY:8:2} % 12]       ; hour 0-12
+	    _date:[M]:. => num:${SAY:10:2}              ; minute
+	    ; XXX too bad the '?' function does not remove the quotes
+	    ; _date:[pP]:. => digits/$[ ${SAY:10:2} > 12 ? "p-m" :: "a-m"]      ; am pm
+	    _date:[pP]:. => digits/p-m  ; am pm
+	    _date:[S]:. => num:${SAY:13:2}              ; seconds
+	    _date:[Ii]:. => num:$[${SAY:8:2} % 12]                      ; hour 0-12
+	    _date:[k]:. => num:${SAY:8:2}                               ; hour (one, two. three, ...,twenty three
+	    _date:[m]:. => num:${SAY:4:2}                               ; month number
+	    _date:[Q]:. => date:dby ;incompleat                         ; "today", "yesterday" or ABdY
+	    _date:[q]:. => date:dby ;incompleat                         ; "" (for today), "yesterday", weekday, or ABdY
+	    _date:[R]:. => date:HM${SAY}                                ; 24 hour time, including minute
+	    _date:[T]:. => date:HMS${SAY}                               ; 24 hour, minure, seconds
+	
+	
+	[en-base](!)  ; this is macro you have to find out exact [en] where this macro has been included.
+	    _[n]um:0. => num:${SAY:1}
+	    _[n]um:X => digits/${SAY}
+	    _[n]um:1X => digits/${SAY}
+	    _[n]um:[2-9]0 =>  digits/${SAY}
+	    _[n]um:[2-9][1-9] =>  digits/${SAY:0:1}0, num:${SAY:1}
+	    _[n]um:X00 => num:${SAY:0:1}, digits/hundred
+	    _[n]um:XXX => num:${SAY:0:1}, digits/hundred, num:${SAY:1}
+	
+	    _[n]um:X000 => num:${SAY:0:1}, digits/thousand
+	    _[n]um:XXXX => num:${SAY:0:1}, digits/thousand, num:${SAY:1}
+	    _[n]um:XX000 => num:${SAY:0:2}, digits/thousand
+	    _[n]um:XXXXX => num:${SAY:0:2}, digits/thousand, num:${SAY:2}
+	    _[n]um:XXX000 => num:${SAY:0:3}, digits/thousand
+	    _[n]um:XXXXXX => num:${SAY:0:3}, digits/thousand, num:${SAY:3}
+	
+	    _[n]um:X000000 => num:${SAY:0:1}, digits/million
+	    _[n]um:XXXXXXX => num:${SAY:0:1}, digits/million, num:${SAY:1}
+	    _[n]um:XX000000 => num:${SAY:0:2}, digits/million
+	    _[n]um:XXXXXXXX => num:${SAY:0:2}, digits/million, num:${SAY:2}
+	    _[n]um:XXX000000 => num:${SAY:0:3}, digits/million
+	    _[n]um:XXXXXXXXX => num:${SAY:0:3}, digits/million, num:${SAY:3}
+	
+	    _[n]um:X000000000 => num:${SAY:0:1}, digits/billion
+	    _[n]um:XXXXXXXXXX => num:${SAY:0:1}, digits/billion, num:${SAY:1}
+	    _[n]um:XX000000000 => num:${SAY:0:2}, digits/billion
+	    _[n]um:XXXXXXXXXXX => num:${SAY:0:2}, digits/billion, num:${SAY:2}
+	    _[n]um:XXX000000000 => num:${SAY:0:3}, digits/billion
+	    _[n]um:XXXXXXXXXXXX => num:${SAY:0:3}, digits/billion, num:${SAY:3}
+	
+	[en](en-base,date-base,digit-base) ;here we have included macros we are going to use.
+	    _datetime::. => date:AdBY 'digits/at' IMp:${SAY}
+	    _date::. => date:AdBY:${SAY}
+	    _time::. => date:IMp:${SAY}
 
 
 Above all are implemented using asterisk pattern matching techniques . If you don't know about asterisk pattern matching please have look on
@@ -91,8 +93,6 @@ let us play the number 25,376 using following example .
 	Note:
       	----- 	
 	If you are using asterisk-1.6 and above version; then replace ',' with '|' as playback(num:25376,say)
-
-
 
 
 ## Explanation
@@ -179,11 +179,11 @@ let us play the number 25,376 using following example .
 
 ## Number,Date,Time to voice or speech configuration settings for Arabic
 
-	In Arabic number system quite different from english number system.There is a small changes in reading two digit numbers 
-	such as 11,23,67..99. Remaining methodologies are same as english.
+In Arabic number system quite different from english number system.There is a small changes in reading two digit numbers 
+such as 11,23,67..99. Remaining methodologies are same as english.
 
-        For example,
-		34 => "orbaha va thalathun" just reverse interpretation in english. Instead of "thirty four", "four thirty" that is it.
+For example,
+	34 => "orbaha va thalathun" just reverse interpretation in english. Instead of "thirty four", "four thirty" that is it.
 
 [ar](date-base,digit-base)
     [ar](date-base,digit-base)
