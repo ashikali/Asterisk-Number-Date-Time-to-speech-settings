@@ -1,7 +1,6 @@
-This is documentation is useful for those who wanted to configure Date,Time,Number to speech in Asterisk .
+This documentation is useful for those who wants to configure Date,Time,Number to speech in Asterisk.
 
-Introduction :
-=============
+### Introduction
 
  In order to configure number to speech in asterisk.We need to edit /etc/asterisk/say.conf file.By default there are number to speech configurations for English,German and itly..etc languages.If you want to make asterisk to speak your language, we have to do some configurations on this.For example we can say, in say.conf file by default we are able to see the configuration settings for englise as [en] and itly as [it]. Here I attached sample text of say.conf for english.
 
@@ -81,8 +80,7 @@ http://www.the-asterisk-book.com/unstable/einleitung-regex.html .
 
 let us play the number 25,376 using following example .
 
-On Dialplan:
-===========
+## On Dialplan
 
 	[sample]
 	exten = s,1,NoOp(PlayNumber)
@@ -97,8 +95,7 @@ On Dialplan:
 
 
 
-Explanation :
-============
+## Explanation
 
 	When the asterisk executes the playback(num:25376|say); it matches with say.conf for english(en) . As per the above configuration; 
 	so the hit should be in 
@@ -130,8 +127,7 @@ Explanation :
 	That's it.We are now familiar with asterisk say.conf.
 	
 
-Number,Date,Time to voice or speech configuration settings for Indian English :
-=============================================================================
+## Number,Date,Time to voice or speech configuration settings for Indian English
 
 	In indian english,there is a change in reading numbers.we used to read this number as 254560 "two lack fifty four thousand five 
 	hundred sixty".To achive this; here is the configuration for reading indian english numbers.Replace this in say.conf en-base 
@@ -176,14 +172,12 @@ Number,Date,Time to voice or speech configuration settings for Indian English :
 	    _date::. => date:AdBY:${SAY}
 	    _time::. => date:IMp:${SAY}
 	
-	Notes:
-	-----
+### Notes
 
  	1) Record "lack,crore" or download from https://github.com/ashikali/Regional-Asterisk-Number-Date-Time-to-speech-settings and place 
 	   it in  /var/lib/asterisk/sounds/en/digits directory before going to apply above settings for india english number system.
 
-Number,Date,Time to voice or speech configuration settings for Arabic :
-======================================================================
+## Number,Date,Time to voice or speech configuration settings for Arabic
 
 	In Arabic number system quite different from english number system.There is a small changes in reading two digit numbers 
 	such as 11,23,67..99. Remaining methodologies are same as english.
@@ -236,15 +230,15 @@ Number,Date,Time to voice or speech configuration settings for Arabic :
     _time::. => date:IMp:${SAY}
 
 
-Note: 
-====
-    1)above settings will be useful for those who have limited voices rather than 0..99.
+### Note
 
-    2) You can download arabic voice files from https://github.com/ashikali/Regional-Asterisk-Number-Date-Time-to-speech-settings.
-       it does not contain 0..99,date and time voice files. Just it has to cover number part for above settings.
+    - above settings will be useful for those who have limited voices rather than 0..99.
 
-How to Workout:
-==============
+    - You can download arabic voice files from https://github.com/ashikali/Asterisk-Number-Date-Time-to-speech-settings.
+      it does not contain 0..99,date and time voice files. Just it has to cover number part for above settings.
+
+## How to Workout:
+
 To make it effect in asterisk just run the following command in asterisk console. 
 
 *CLI> module reload app_playback.so
@@ -253,9 +247,7 @@ To make it effect in asterisk just run the following command in asterisk console
 
 *CLI> reload 
 
-
-  On Dialplan:
-  ===========
+### On Dialplan:
 
         [sample]
         exten => s,1,NoOp(PlayNumber)
@@ -264,16 +256,16 @@ To make it effect in asterisk just run the following command in asterisk console
 	exten => s,n,playback(datetime::201104172030.00-4-102,say) ; for date
         exten => s,n,hangup
 
-        Note:
-        =====
-        If you are using asterisk-1.6 and above version; then replace ',' with '|' as playback(num:25376,say)
+### Note:
 
-  On AGI:
-  =======
+  If you are using asterisk-1.6 and above version; then replace ',' with '|' as playback(num:25376,say)
+
+
+### On AGI
+
         I don't know whether it is bug or not.For both 1.4 and 1.6;  we have to use '|' although it is 1.6.
 
-	On 1.8 and above:
-        ================
+	** On 1.8 and above **
 
 		#!/usr/bin/perl -w
 		
@@ -284,8 +276,7 @@ To make it effect in asterisk just run the following command in asterisk console
 		$AGI->exec("PLAYBACK datetime::201104172030.00-4-102,say \"\"\n"); # for date
 		exit;
 
-	On 1.4 and 1.6 :
-	================
+	** On 1.4 and 1.6 **
 
                 #!/usr/bin/perl -w
 
@@ -296,12 +287,35 @@ To make it effect in asterisk just run the following command in asterisk console
 		$AGI->exec("PLAYBACK datetime::201104172030.00-4-102|say \"\"\n"); # for date
                 exit;
 
+       ** In the php-agi, call as follows **
 
-Enjoy with playing asterisk ,
+		$agi->exec("PlayBack","num:{$info[0]},say");
 
-Please comment on this; If you think that anything wrong in above .
+----------------------------------------------------------------------------------------------------
+
+## number_to_arabic.rb
+
+This is a small recursive ruby program which convert number to Playable format or Text format.
+
+## For example
+
+If you call the function ar_number_to_voice with 4434 mentioned in the sample function call inside the number_to_arabic.rb file.
+
+The output will be.
+
+digits/4 digits/1000 digits/and digits/4 digits/100 digits/and digits/4 digits/and digits/30
+
+in the WEB applications you can play corresponding sound files respectively.
+
+## How to change the output format
+
+if you want to change the format in case you want print as arabic text then inside the function
+         you can replace the digits/4 with 'ﺃﺮﺒﻋﺓ'
+         you can replace the digits/1000 with 'ﺄﻠﻓ'
+         you can replace the digits/and with 'ﻭ'
+         you can replace the digits/100 with 'ﻡﺎﺋﺓ' respectively.
+
 
 
 Cheers,
-Ashik Ali
-ashikali.m@gmail.com
+Ashik
